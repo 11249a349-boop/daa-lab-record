@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int main() {
+    int n, i, j;
+    float item[10], bin[10], cap;
+    int bin_count = 0;
+
+    printf("Enter number of items: ");
+    scanf("%d", &n);
+
+    printf("Enter bin capacity: ");
+    scanf("%f", &cap);
+
+    for (i = 0; i < n; i++) {
+        printf("Enter size of item %d: ", i + 1);
+        scanf("%f", &item[i]);
+    }
+
+    for (i = 0; i < n; i++) {
+        int placed = 0;
+
+        // Try to fit in existing bins
+        for (j = 0; j < bin_count; j++) {
+            if (bin[j] >= item[i]) {
+                bin[j] -= item[i];
+                placed = 1;
+                break;
+            }
+        }
+
+        // If not placed, create new bin
+        if (!placed) {
+            bin[bin_count] = cap - item[i];
+            bin_count++;
+        }
+    }
+
+    printf("\nTotal bins used: %d\n", bin_count);
+    printf("Remaining space in bins:\n");
+
+    for (i = 0; i < bin_count; i++) {
+        printf("Bin %d: %.2f\n", i + 1, bin[i]);
+    }
+
+    return 0;
+}
