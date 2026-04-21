@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int firstFit(int items[], int n, int capacity) {
+    int bin_rem[10];
+    int bin_count = 0;
+
+    for (int i = 0; i < n; i++) {
+        int placed = 0;
+
+        for (int j = 0; j < bin_count; j++) {
+            if (bin_rem[j] >= items[i]) {
+                bin_rem[j] -= items[i];
+                placed = 1;
+                break;
+            }
+        }
+
+        if (!placed) {
+            bin_rem[bin_count] = capacity - items[i];
+            bin_count++;
+        }
+    }
+
+    return bin_count;
+}
+
+int main() {
+    int items[] = {4, 8, 1, 4, 2, 1};
+    int n = 6;
+    int capacity = 10;
+
+    int bins = firstFit(items, n, capacity);
+    printf("Number of bins required: %d\n", bins);
+
+    return 0;
+}
